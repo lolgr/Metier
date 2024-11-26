@@ -5,16 +5,11 @@ set_property(GLOBAL PROPERTY OS_FOLDERS ON)
 
 set(SOURCES
     Metier_app.cpp
-    Metier_app.h
-    Metier_CurlWrapper.h
     Metier_Ticker.cpp
-    Metier_Ticker.h
-    Metier_Chart.h
     Metier_Chart.cpp
     Metier_TCallback.cpp
-    Metier_TCallback.h
     Metier_Indicators.cpp
-    Metier_Indicators.h
+    Metier_Series.cpp
     )
 
 include_directories(${CMAKE_SOURCE_DIR}/third_party/curl-8.1.2/include/curl)
