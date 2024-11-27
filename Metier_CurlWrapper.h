@@ -3,6 +3,9 @@
 #include <sstream>
 #include <curl.h>
 
+#ifndef CurlRequest_H
+#define CurlRequest_H
+
 class CurlRequest 
 {
     private:
@@ -43,3 +46,5 @@ class CurlRequest
         return HttpCode;
     }
 };
+
+#endif

@@ -5,6 +5,9 @@
 #include "json.h"
 using json = nlohmann::json;
 
+#ifndef TICKER_H
+#define TICKER_H
+
 class Ticker
 {
     private:
@@ -41,3 +44,5 @@ class Ticker
         //  5 seconds and adds data to 'Bars' vector in 'Chart' class every 61 seconds.
         void Run();
 };
+
+#endif

@@ -1,6 +1,9 @@
 #pragma once
 #include "Metier_Chart.h"
 
+#ifndef TICKERCALLBACK_H
+#define TICKERCALLBACK_H
+
 class TickerCallback {
     
     private:
@@ -27,3 +30,5 @@ class TickerCallback {
         double getNetBalance(Chart &chart);
 
 };
+
+#endif

@@ -10,6 +10,12 @@ set(SOURCES
     Metier_TCallback.cpp
     Metier_Indicators.cpp
     Metier_Series.cpp
+    Metier_app.h
+    Metier_Ticker.h
+    Metier_Chart.h
+    Metier_TCallback.h
+    Metier_Indicators.h
+    Metier_Series.h
     )
 
 include_directories(${CMAKE_SOURCE_DIR}/third_party/curl-8.1.2/include/curl)

@@ -18,6 +18,35 @@ std::optional<std::array<double, 9>> Chart::GetBarAt(int barsAway, int barCount)
     return Bars[i];
 }
 
+Series<double> Chart::High(Chart* chart, int start, int end) {
+    return Series<double>(static_cast<double>(chart->GetBarAt(start).value()[2]), GetHigh, chart, start, end);
+}
+
+Series<double> Chart::Low(Chart* chart, int start, int end) {
+    return Series<double>(static_cast<double>(chart->GetBarAt(start).value()[3]), GetLow, chart, start, end);
+}
+
+Series<double> Chart::Close(Chart* chart, int start, int end) {
+    return Series<double>(static_cast<double>(chart->GetBarAt(start).value()[4]), GetPrice, chart, start, end);
+}
+
+double Chart::GetLowestInSeries(Series<double> input, int length) {
+    double lowest = input[0];
+    for (int x = 1; x < length; x++)
+        if (input[x] < lowest)
+            lowest = input[x];
+    return lowest;
+}
+
+double Chart::GetHighestInSeries(Series<double> input, int length) {
+    double highest = input[0];
+    for (int x = 1; x < length; x++)
+        if (input[x] > highest)
+            highest = input[x];
+    return highest;
+}
+
+//--Obsolete function--
 std::vector<double> Chart::GetPricesInRange(int barsAway) {
     std::vector<double> output;
     for (int x = 0; x < barsAway; x++)
@@ -25,6 +54,7 @@ std::vector<double> Chart::GetPricesInRange(int barsAway) {
     return output;
 }
 
+//--Obsolete function--
 std::vector<double> Chart::GetHighsInRange(int barsAway) {
     std::vector<double> output;
     for (int x = 0; x < barsAway; x++)
@@ -32,6 +62,7 @@ std::vector<double> Chart::GetHighsInRange(int barsAway) {
     return output;
 }
 
+//--Obsolete function--
 std::vector<double> Chart::GetLowsInRange(int barsAway) {
     std::vector<double> output;
     for (int x = 0; x < barsAway; x++)
@@ -39,10 +70,12 @@ std::vector<double> Chart::GetLowsInRange(int barsAway) {
     return output;
 }
 
+//--Obsolete function--
 double Chart::GetPriceAt(int barsAway, int barCount) {
     return barCount == -1 ? GetBarAt(barsAway).value()[4] : GetBarAt(barsAway, barCount).value()[4];
 }
 
+//--Obsolete function--
 double Chart::GetLowest(std::vector<double> pricesIn) {
     double lowest = pricesIn[0];
     for (int x = 0; x < pricesIn.size(); x++)
@@ -51,6 +84,7 @@ double Chart::GetLowest(std::vector<double> pricesIn) {
     return lowest;
 }
 
+//--Obsolete function--
 double Chart::GetHighest(std::vector<double> pricesIn) {
     double highest = pricesIn[0];
     for (int x = 0; x < pricesIn.size(); x++)
@@ -58,23 +92,3 @@ double Chart::GetHighest(std::vector<double> pricesIn) {
             highest = pricesIn[x];
     return highest;
 }
-
-// double Chart::GetHighestInRange(int length) {
-//     double highest = GetPriceAt(0);
-//     for (int x = 0; x < length; x++) {
-//         double price = GetPriceAt(x);
-//         if (price > highest)
-//             highest = price;
-//     }
-//     return highest;
-// }
-
-// double Chart::GetLowestInRange(int length) {
-//     double lowest = GetPriceAt(0);
-//     for (int x = 0; x < length; x++) {
-//         double price = GetPriceAt(x);
-//         if (price < lowest)
-//             lowest = price;
-//     }
-//     return lowest;
-// }

@@ -87,7 +87,7 @@ void TickerCallback::OnOpen(Chart &chart) {
 
     buySignal = (nextTrend != 0);
     sellSignal = (nextTrend == 0);
-    
+
     // std::cout << " MaxLowPrice: " << maxLowPrice << " minHighPrice: " << minHighPrice << " lowma: " << lowma << " highma: " << highma <<  " lowPrice: " << lowPrice  << " highPrice: " << highPrice << std::endl;
     // std::cout << " trend: " << trend << " nextTrend: " << nextTrend << std::endl;
     
@@ -102,6 +102,10 @@ void TickerCallback::OnOpen(Chart &chart) {
         shares = 0.0;
         std::cout << "\t\tTrade Stoploss! Sold At: " << chart.GetPriceAt(0) << " Bal: " << balance << std::endl;
     }
+
+    Series<double> chartSeries = chart.toSeries();
+    
+    std::cout << chartSeries[10] << "[10] ---- " << chartSeries << "[0]" << std::endl;
 }
 
 double TickerCallback::getNetBalance(Chart &chart) {
