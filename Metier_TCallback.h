@@ -17,7 +17,9 @@ class TickerCallback {
         double boughtPrice = -1;
         double shares = 0.0;
         bool buySignal = false;
-        bool sellSignal = false;        
+        bool sellSignal = false; 
+
+        double getNetBalance(Chart &chart);
 
     public:
         //Strategy by KivancOzbilgic 
@@ -26,8 +28,6 @@ class TickerCallback {
         void OnClose(Chart &chart);
 
         void OnOpen(Chart &chart);
-
-        double getNetBalance(Chart &chart);
 
 };
 

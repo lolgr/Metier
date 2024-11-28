@@ -103,9 +103,19 @@ void TickerCallback::OnOpen(Chart &chart) {
         std::cout << "\t\tTrade Stoploss! Sold At: " << chart.GetPriceAt(0) << " Bal: " << balance << std::endl;
     }
 
-    Series<double> chartSeries = chart.toSeries();
-    
-    std::cout << chartSeries[10] << "[10] ---- " << chartSeries << "[0]" << std::endl;
+    auto lowFiveBack = Chart::Low(&chart, 1);
+    auto lowFive = Chart::Low(&chart, 5);
+    auto close = Chart::Close(&chart);
+
+    auto trueRange = TI::tr(&chart);
+
+    auto sma = TI::smaN(&close, 10);
+
+    // std::cout << trueRange << "[0] --- " << trueRange[10] << "[10] --- " << trueRange[9] << "[9] --- " << trueRange[11] << "[11] " << std::endl;
+    // std::cout << close << "[0] --- " << close[10] << "[10] --- " << close[9] << "[9] --- " << close[11] << "[11] " << std::endl;
+    // std::cout << sma << "[0] --- " << sma[10] << "[10] --- " << sma[9] << "[9] --- " << sma[11] << "[11] " << std::endl;
+    // std::cout << " ----" << close << " " << close[1] << " " << close[2] << " " << close[3] << " " << close[4] << " " << close[5] << " " << close[6] << " " << close[7] << " " << close[8] << " " << close[9] << " " << close[10] << " ----" << std::endl;
+    // std::cout << lowFiveBack[4] << "[5] ---- " << lowFive << "[0] ----" << chart.GetLowAt(5) << std::endl;
 }
 
 double TickerCallback::getNetBalance(Chart &chart) {

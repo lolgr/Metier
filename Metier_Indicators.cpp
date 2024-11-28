@@ -13,26 +13,26 @@ double TI::wma(Chart chart, int length, bool includeCurrent) {
     return numT / demT;
 }
 
-double TI::tr(Chart chart, std::vector<double>& opt_pricesOut, int length, int barsAway) {
-    for (int x = barsAway; x < length; x++) {
-        auto bar = chart.GetBarAt(x).value();
-        auto prevBar = chart.GetBarAt(x + 1).value();
-        double tHigh = bar[2];
-        double tLow = bar[3];
-        double yClose = prevBar[4];
-        double yLow = prevBar[3];
+// double TI::tr(Chart chart, std::vector<double>& opt_pricesOut, int length, int barsAway) {
+//     for (int x = barsAway; x < length; x++) {
+//         auto bar = chart.GetBarAt(x).value();
+//         auto prevBar = chart.GetBarAt(x + 1).value();
+//         double tHigh = bar[2];
+//         double tLow = bar[3];
+//         double yClose = prevBar[4];
+//         double yLow = prevBar[3];
 
-        double a = tHigh - tLow;
-        double b = std::abs(tHigh - yClose);
-        double c = std::abs(tLow - yClose);
-        double max = std::max(a, std::max(b, c));
-        if (length > 1)
-            opt_pricesOut.push_back(max);
-        else
-            return max;
-    }
-    return -1;
-}
+//         double a = tHigh - tLow;
+//         double b = std::abs(tHigh - yClose);
+//         double c = std::abs(tLow - yClose);
+//         double max = std::max(a, std::max(b, c));
+//         if (length > 1)
+//             opt_pricesOut.push_back(max);
+//         else
+//             return max;
+//     }
+//     return -1;
+// }
 
 double TI::rma(Chart chart, int length, std::vector<double> opt_prices) {
     /*
@@ -92,7 +92,7 @@ double TI::mfi(Chart chart, int length, std::vector<double> opt_prices, std::vec
     double upper;
     double lower;
     for (int x = 0; x < length; x++) {
-        double volume = chart.GetBarAt(x).value()[5];
+        double volume = chart.GetBarAt(x).volume;
         double price = opt_prices.empty() ? chart.GetPriceAt(x) : opt_prices[x];
         double prevPrice = opt_prices.empty() ? chart.GetPriceAt(x + 1) : opt_prices[x + 1];
         double change = price - prevPrice;
@@ -105,10 +105,10 @@ double TI::mfi(Chart chart, int length, std::vector<double> opt_prices, std::vec
 std::vector<double> TI::hlc3(Chart chart, int length) {
     std::vector<double> output; 
     for (int x = 0; x < length + 1; x++) {
-        auto bar = chart.GetBarAt(x).value();
-        double high = bar[2];
-        double low = bar[3];
-        double close = bar[4];
+        Bar bar = chart.GetBarAt(x);
+        double high = bar.high;
+        double low = bar.low;
+        double close = bar.close;
         output.push_back((high + low + close) / 3);
     }
     return output;

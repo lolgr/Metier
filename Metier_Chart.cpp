@@ -1,33 +1,33 @@
 #include "Metier_Chart.h"
 #include <optional>
 
-bool Chart::SetBarAt(int barsAway, std::array<double, 9> bar, int barCount) {
-    int s = barCount != -1 ? barCount : static_cast<int>(Bars.size());
-    int i = s - 1 - barsAway;
+Bar Chart::GetBarAt(int at) {
+    int s = Bars.size();
+    int i = s - 1 - at;
+    if (i < 0)
+        return GetBarAt(s);
+    return Bars[i];
+}
+
+bool Chart::SetBarAt(int at, Bar bar) {
+    int s = Bars.size();
+    int i = s - 1 - at;
     if (i < 0)
         return false;
     Bars[i] = bar;
     return true;
 }
 
-std::optional<std::array<double, 9>> Chart::GetBarAt(int barsAway, int barCount) {
-    int s = barCount != -1 ? barCount : static_cast<int>(Bars.size());
-    int i = s - 1 - barsAway;
-    if (i < 0)
-        return std::nullopt;
-    return Bars[i];
-}
-
 Series<double> Chart::High(Chart* chart, int start, int end) {
-    return Series<double>(static_cast<double>(chart->GetBarAt(start).value()[2]), GetHigh, chart, start, end);
+    return Series<double>(chart->GetBarAt(start).high, High, chart, start, end);
 }
 
 Series<double> Chart::Low(Chart* chart, int start, int end) {
-    return Series<double>(static_cast<double>(chart->GetBarAt(start).value()[3]), GetLow, chart, start, end);
+    return Series<double>(chart->GetBarAt(start).low, Low, chart, start, end);
 }
 
 Series<double> Chart::Close(Chart* chart, int start, int end) {
-    return Series<double>(static_cast<double>(chart->GetBarAt(start).value()[4]), GetPrice, chart, start, end);
+    return Series<double>(chart->GetBarAt(start).close, Close, chart, start, end);
 }
 
 double Chart::GetLowestInSeries(Series<double> input, int length) {
@@ -72,7 +72,8 @@ std::vector<double> Chart::GetLowsInRange(int barsAway) {
 
 //--Obsolete function--
 double Chart::GetPriceAt(int barsAway, int barCount) {
-    return barCount == -1 ? GetBarAt(barsAway).value()[4] : GetBarAt(barsAway, barCount).value()[4];
+    // return barCount == -1 ? GetBarAt(barsAway).value()[4] : GetBarAt(barsAway, barCount).value()[4];
+    return barCount == -1 ? GetBarAt(barsAway).close : 0;
 }
 
 //--Obsolete function--
